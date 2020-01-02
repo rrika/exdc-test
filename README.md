@@ -1,6 +1,8 @@
+# exdc-test
+
 ABC has a feature to use an external don't-care specification during optimization (in the `mfs`/`mfs2` pass). These sources demonstrate its use through yosys. Confusingly there's both a `exdc_set` and `care_set` command and different abc passes use either one or the other. Another quirk is that when `care` is hardwired to false, the specification is ignored entirely (as if it was hardwired to true). The `exdc` network is serialized in some formats like blif, leading to confusion in some readers (like yosys). It can be cleared beforehand with the `exdc_free` command. The `care` network isn't serialized and can't be freed.
 
-## Combinatorial Logic
+## Combinational Logic
 
 Run this example with `yosys -s comb.ys`.
 
@@ -34,7 +36,7 @@ endmodule
 
 The inputs of the care module are the inputs as well as the registers of the main module. The expression `x[0] ^ x[1] ^ x[2]` will be simplified to `x[1]`. Except `x` is a register this time.
 
-## Combinatorial logic (single module)
+## Combinational logic (single module)
 
 Run this example with `yosys -s single.ys`.
 
@@ -46,7 +48,3 @@ endmodule
 ```
 
 As the first one, except the .ys file differs to extract the two aspects from the same module.
-
-## Combinatorial logic (using $assume)
-
-TODO
