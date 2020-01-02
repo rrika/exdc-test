@@ -1,0 +1,14 @@
+read_verilog seq.v
+synth -noabc
+design -save xx
+
+delete seq_care/i:clk
+write_blif -top seq_care seq_care.blif
+
+design -load xx
+delete seq_care
+abc -script "+care_set seq_care.blif; mfs"
+opt_clean
+opt_expr
+!rm seq_care.blif
+write_verilog seq_opt.v

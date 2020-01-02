@@ -1,0 +1,19 @@
+read_verilog single.v
+synth -noabc
+clean
+design -save xx
+
+expose -evert-dff
+delete single/i:clk
+delete single/o:* single/o:care %d
+clean
+write_blif -top single single_care.blif
+
+design -load xx
+delete single/o:care
+clean
+abc -script "+care_set single_care.blif; mfs"
+opt_clean
+opt_expr
+!rm single_care.blif
+write_verilog single_opt.v

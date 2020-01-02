@@ -1,0 +1,9 @@
+read_verilog comb.v
+synth -noabc
+write_blif -top comb_care comb_care.blif
+delete comb_care
+abc -script "+care_set comb_care.blif; mfs"
+opt_clean
+opt_expr
+!rm comb_care.blif
+write_verilog comb_opt.v
